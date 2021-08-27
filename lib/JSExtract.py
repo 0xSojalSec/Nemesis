@@ -7,7 +7,7 @@ from lib.Engine import Engine
 from lib.PathFunctions import urler, unurler, unender
 from lib.Functions import manage_output, shannon_entropy
 from lib.Globals import base64char, hexchar, dom_sources_regex, dom_sinks_regex
-from lib.Globals import web_services_regex, custom_sensitive, custom_insensitive, Color 
+from lib.Globals import web_services_regex, custom_sensitive, custom_insensitive, Color
 from lib.Globals import url_regex, subdomain_regex, path_regex, single_path_regex, library_regex
 
 JSE = Engine()

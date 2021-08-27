@@ -1,0 +1,5 @@
+.tox/
+**/__pycache__/
+dist/
+build/
+src/jscanner.egg-info/
