@@ -2,4 +2,4 @@
 **/__pycache__/
 dist/
 build/
-src/jscanner.egg-info/
+src/nemesis_scan.egg-info/
