@@ -34,14 +34,10 @@ Enjoy bug hunting
 ```
 
 ## Example
-1. Scan a single URL/Domain/Subdomain  
- - ```JScanner -d google.com``` or ```JScanner -u https://google.com/closurelibrary.js```
+1. Scan a single url
+ - ```Nemesis -u google.com``` or ```Nemesis -u https://google.com/closurelibrary.js```
 2. Scan from URLs
- - ```JScanner -w hakrawler.txt -oD `pwd` -t 10 -d domain.com```
-3. Scan from stdin (subdomains) with entropy check
- - ```assetfinder google.com | JScanner --- -o results.txt -e```
-4. Scan from stdin (hakrawler, gau)
- - ```echo "uber.com" | tee >(hakrawler | JScanner --- -o hakrawler.txt -t 10) >(gau | JScanner --- -o gau.txt -t 10)```
+ - ```Nemesis -w hakrawler.txt```
 
 ## Limitations
 * Output maybe repeated such as same links again and again
