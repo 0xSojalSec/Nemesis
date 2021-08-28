@@ -1,2 +1,2 @@
 # Version 1.0
-* Reformat code
+* Change from JScanner to Nemesis/nemesis-scan
