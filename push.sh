@@ -4,7 +4,7 @@ source ~/.bash_aliases
 source ~/.bash_profile
 
 # Make changes to code before running
-egg='nemesis'
+egg='nemesis_scan'
 if [[ "$egg" == "" ]]; then
 	echo "WARNING: Edit this file to include your package"
 	exit

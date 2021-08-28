@@ -1,17 +1,18 @@
 from requests import get
+from bs4 import Comment
 from jsbeautifier import beautify
-from bs4 import BeautifulSoup, Comment
+from urllib.parse import unquote
 
 class Engine:
     def __init__(self):
         pass
 
     def find_href(self, s):
-        l =  [t['href'] for t in s.find_all(href = True) if t]
+        l =  [unquote(t['href']) for t in s.find_all(href = True) if t]
         return l
 
     def find_img_src(self, s):
-        l = [i['src'] for i in s.find_all('image', {'src': True})]
+        l = [unquote(i['src']) for i in s.find_all('image', {'src': True})]
         return l
 
     def find_comment(self, s) -> set:
@@ -25,18 +26,18 @@ class Engine:
             if i.has_attr('value'):
                 p.append(i['name'] + ':' + i['value'])
             else:
-                p.append(i['name'] + ":"))
+                p.append(i['name'] + ":")
         return p
 
     def find_script_src(self, s):
-        l = [st['src'] for st in s.find_all('script', {'src': True })]
+        l = [unquote(st['src']) for st in s.find_all('script', {'src': True })]
         return l
 
     def find_script_code(self, s):
         e = [beautify(st.string).split('\n') for st in s.find_all('script', {'src': False })]
         return e
 
-    def html_return(self, u):
+    def html_source_return(self, u):
         data = []
         try:
             data = get(u).text
@@ -44,7 +45,7 @@ class Engine:
             print(E, E.__class__)
         return data
 
-    def js_return(self, u):
+    def js_source_return(self, u):
         data = []
         try:
             data = beautify(get(u).text).split('\n')
