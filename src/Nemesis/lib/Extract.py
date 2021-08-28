@@ -16,7 +16,7 @@ engine = Engine()
 def extract_url(url):
     unparsed_url = urler(url)
     parsed_url = urlparse(unparsed_url)
-    domain, path, query = parsed_url.netloc, parsed_url.path, parsed_url.query
+    domain, path = parsed_url.netloc, parsed_url.path
     is_js_url = path.endswith('.js')
     output_list = []
     if is_js_url:
@@ -38,7 +38,7 @@ def extract_url(url):
                 output_list.append(l)
                 pretty_print(line, l)
                 continue
-            l = link_extract(line)
+            l = link_extract(line, domain = domain)
             if l:
                 output_list.append(l)
                 pretty_print(line, l)

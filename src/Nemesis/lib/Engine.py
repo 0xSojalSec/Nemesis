@@ -1,4 +1,5 @@
 from requests import get
+from requests.exceptions import Timeout
 from bs4 import Comment
 from jsbeautifier import beautify
 from urllib.parse import unquote
@@ -8,7 +9,7 @@ class Engine:
         pass
 
     def find_href(self, s):
-        l =  [unquote(t['href']) for t in s.find_all(href = True) if t]
+        l = [unquote(t['href']) for t in s.find_all(href = True) if t]
         return l
 
     def find_img_src(self, s):
@@ -40,15 +41,15 @@ class Engine:
     def html_source_return(self, u):
         data = []
         try:
-            data = get(u).text
-        except Exception as E:
-            print(E, E.__class__)
+            data = get(u, timeout= 15 ).text
+        except Timeout:
+            pass
         return data
 
     def js_source_return(self, u):
         data = []
         try:
-            data = beautify(get(u).text).split('\n')
-        except Exception as E:
-            print(E, E.__class__)
+            data = beautify(get(u, timeout = 15).text).split('\n')
+        except Timeout:
+            pass
         return data
