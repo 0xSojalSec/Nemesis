@@ -41,7 +41,7 @@ class Engine:
     def html_source_return(self, u):
         data = []
         try:
-            data = get(u, timeout= 15 ).text
+            data = get(u, timeout = 15).text
         except Timeout:
             pass
         return data
