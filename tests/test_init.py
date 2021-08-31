@@ -49,9 +49,9 @@ class NemesisTest(unittest.TestCase):
         self.assertEqual(url_extract('https://google.com'), ("https://google.com", "url_match"), "Should be equal")
         self.assertEqual(url_extract('https://google.com/a/b/c'), ("https://google.com/a/b/c", "url_match"), "Should be equal")
         self.assertEqual(url_extract('https://google.com/a/b/c?d=e&f=g'), ("https://google.com/a/b/c?d=e&f=g", "url_match"), "Should be equal")
-        #self.assertEqual(url_extract('google.com/a/b/c'), ("google.com/a/b/c", "url_match"), "Should be equal")
-        self.assertEqual(url_extract('s3.us-west-2.amazonaws.com'), ("s3.us-west-2.amazonaws.com", "web_services_match"), "Should be equal")
-        #self.assertEqual(url_extract('https://s3.amazonaws.com/examplebucket'), ("https://s3.amazonaws.com/examplebucket", "web_services_match"), "Should be equal")
+        self.assertEqual(url_extract('google.com/a/b/c'), ("google.com/a/b/c", "url_match_without_netloc"), "Should be equal")
+        self.assertEqual(url_extract('s3.us-west-2.amazonaws.com'), ("s3.us-west-2.amazonaws.com", "url_match_without_netloc"), "Should be equal")
+        self.assertEqual(url_extract('https://s3.amazonaws.com/examplebucket'), ("https://s3.amazonaws.com/examplebucket", "url_match"), "Should be equal")
 
     def test_path_extract(self):
         self.assertEqual(path_extract(''), (), "Should be empty")

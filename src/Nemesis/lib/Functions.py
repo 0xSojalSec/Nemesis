@@ -4,8 +4,8 @@ from re import search, IGNORECASE
 
 from Nemesis.lib.Globals import Color
 from Nemesis.lib.Globals import base64char, hexchar, dom_sources_regex, dom_sinks_regex
-from Nemesis.lib.Globals import url_regex, subdomain_regex, path_regex, single_path_regex
 from Nemesis.lib.Globals import web_services_regex, custom_regex_sensitive, custom_regex_insensitive
+from Nemesis.lib.Globals import url_regex, url_regex_without_netloc, subdomain_regex, path_regex, single_path_regex
 
 def banner():
     b = '\x1b[1m\x1b[31m    _   __                         _     \n   / | / /__  ____ ___  ___  _____(_)____\n  /  |/ / _ \\/ __ `__ \\/ _ \\/ ___/ / ___/\n / /|  /  __/ / / / / /  __(__  ) (__  ) \n/_/ |_/\\___/_/ /_/ /_/\\___/____/_/____/  \n                                         \n\x1b[0m'
@@ -83,6 +83,9 @@ def url_extract(line: str) -> tuple:
     if search(url_regex, line):
         mline = search(url_regex, line).group()
         output_list = (mline, 'url_match')
+    elif search(url_regex_without_netloc, line):
+        mline = search(url_regex_without_netloc, line).group()
+        output_list = (mline, 'url_match_without_netloc')
         #if unender(unurler(line), '/') == self.argv.domain:
         #    return ()
     return output_list
@@ -133,6 +136,9 @@ def link_extract(line: str, domain = "") -> tuple:
     if search(url_regex, line):
         mline = search(url_regex, line).group()
         output_list = (mline, 'url_match')
+    elif search(url_regex_without_netloc, line):
+        mline = search(url_regex_without_netloc, line).group()
+        output_list = (mline, 'url_match_without_netloc')
     elif search(path_regex, line):
         mline = search(path_regex, line).group()
         output_list = (mline, 'path_match')

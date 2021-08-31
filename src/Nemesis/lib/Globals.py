@@ -2,7 +2,9 @@ from Nemesis.lib.Color import Color
 
 # General
 # Matches url but not direct path
-url_regex = "((http|https)\:\/\/)+[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*"
+url_regex = "((http|https)://)[a-zA-Z0-9\./?:@-_=]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*"
+url_regex_without_netloc = "((http|https)://)?[a-zA-Z0-9\./?:@-_=]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*"
+#url_regex_without_netloc
 single_path_regex = """('|"|\(|\))(\/){1}[a-zA-Z0-9-_]+(\/)?('|"|\(|\))"""
 path_regex = "([a-zA-Z0-9]+\.[a-zA-Z0-9]{3,6})?\/(([0-9a-zA-Z+.-]+)([\/&| ])){1,30}([a-zA-Z0-9]+(\.[a-zA-Z0-9]*)?)?(\?|;)?([a-zA-Z\[\]&=]*)?"
 experimental_path_regex = "([a-zA-Z0-9]+\.[a-zA-Z0-9]{3,6})?(\/)?(([0-9a-zA-Z+.-]+)([\/&| ])){1,30}([a-zA-Z0-9]+(\.[a-zA-Z0-9]*)?)?(\?|;)?([a-zA-Z\[\]&=]*)?"
