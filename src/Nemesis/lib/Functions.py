@@ -42,8 +42,11 @@ def reduce_string(word: str, args = []) -> str:
     if not word:
         return ""
     word = word.rstrip('//').rstrip(';')
-    for arg in args:
-        word = word.strip(arg)
+    n = 0
+    while len(args) > n:
+        for arg in args:
+            word = word.strip(arg)
+        n += 1
     return word
 
 def dom_source_extract(line: str) -> tuple:
@@ -75,7 +78,7 @@ def url_extract(line: str) -> tuple:
     output_list = ()
     for web_service in web_services_regex:
         if search(web_service, line):
-            mline = search(url_regex, line).group()
+            mline = search(web_service, line).group()
             output_list = (mline, 'web_services_match')
     if search(url_regex, line):
         mline = search(url_regex, line).group()
@@ -96,7 +99,7 @@ def path_extract(line: str) -> tuple:
 
 def shannon_extract(line: str) -> tuple:
     output_list = ()
-    entropy = float(4)
+    entropy = float(3.72)
     for word in line.split(' '):
         if len(word) > 5:
             if shannon_entropy(word, base64char) > entropy or shannon_entropy(word, hexchar) > entropy:
