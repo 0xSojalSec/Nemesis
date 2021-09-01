@@ -1,14 +1,16 @@
 from math import log
 from termcolor import colored
 from re import search, IGNORECASE
+from urlextract import URLExtract
 
 from Nemesis.lib.Globals import Color
 from Nemesis.lib.Globals import base64char, hexchar, dom_sources_regex, dom_sinks_regex
-from Nemesis.lib.Globals import url_regex, url_regex_without_netloc, subdomain_regex, path_regex, single_path_regex
-from Nemesis.lib.Globals import web_services_regex, custom_regex_sensitive, custom_regex_insensitive, experimental_path_regex
+from Nemesis.lib.Globals import subdomain_regex, path_regex, single_path_regex, experimental_path_regex
+from Nemesis.lib.Globals import web_services_regex, custom_regex_sensitive, custom_regex_insensitive
 
 from warnings import warn
 warn("Experimental path regex is experimental and might generate false positives")
+extractor = URLExtract()
 
 def banner():
     b = '\x1b[1m\x1b[31m    _   __                         _     \n   / | / /__  ____ ___  ___  _____(_)____\n  /  |/ / _ \\/ __ `__ \\/ _ \\/ ___/ / ___/\n / /|  /  __/ / / / / /  __(__  ) (__  ) \n/_/ |_/\\___/_/ /_/ /_/\\___/____/_/____/  \n                                         \n\x1b[0m'
@@ -83,14 +85,15 @@ def url_extract(line: str) -> tuple:
         if search(web_service, line):
             mline = search(web_service, line).group()
             output_list = (mline, 'web_services_match')
-    if search(url_regex, line):
-        mline = search(url_regex, line).group()
+    #if search(url_regex, line):
+    #    mline = search(url_regex, line).group()
+    #    output_list = (mline, 'url_match')
+    #elif search(url_regex_without_netloc, line):
+    #    mline = search(url_regex_without_netloc, line).group()
+    #    output_list = (mline, 'url_match_without_netloc')
+    if extractor.has_urls(line):
+        mline = extractor.find_urls(line)
         output_list = (mline, 'url_match')
-    elif search(url_regex_without_netloc, line):
-        mline = search(url_regex_without_netloc, line).group()
-        output_list = (mline, 'url_match_without_netloc')
-        #if unender(unurler(line), '/') == self.argv.domain:
-        #    return ()
     return output_list
 
 def path_extract(line: str) -> tuple:
@@ -139,6 +142,9 @@ def link_extract(line: str, domain = "") -> tuple:
             output_list = (mline, 'web_services_match')
             return output_list
     # url_regex over subdomain_regex, might supress
+    if extractor.has_urls(line):
+        mline = extractor.find_urls(line)
+        output_list = (mline, 'url_match')
     if search(url_regex, line):
         mline = search(url_regex, line).group()
         output_list = (mline, 'url_match')
