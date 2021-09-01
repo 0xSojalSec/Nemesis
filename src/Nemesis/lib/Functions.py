@@ -4,8 +4,8 @@ from re import search, IGNORECASE
 
 from Nemesis.lib.Globals import Color
 from Nemesis.lib.Globals import base64char, hexchar, dom_sources_regex, dom_sinks_regex
-from Nemesis.lib.Globals import web_services_regex, custom_regex_sensitive, custom_regex_insensitive
 from Nemesis.lib.Globals import url_regex, url_regex_without_netloc, subdomain_regex, path_regex, single_path_regex
+from Nemesis.lib.Globals import web_services_regex, custom_regex_sensitive, custom_regex_insensitive, experimental_path_regex
 
 def banner():
     b = '\x1b[1m\x1b[31m    _   __                         _     \n   / | / /__  ____ ___  ___  _____(_)____\n  /  |/ / _ \\/ __ `__ \\/ _ \\/ ___/ / ___/\n / /|  /  __/ / / / / /  __(__  ) (__  ) \n/_/ |_/\\___/_/ /_/ /_/\\___/____/_/____/  \n                                         \n\x1b[0m'
@@ -92,7 +92,10 @@ def url_extract(line: str) -> tuple:
 
 def path_extract(line: str) -> tuple:
     output_list = ()
-    if search(path_regex, line):
+    if search(experimental_path_regex, line):
+        mline = search(experimental_path_regex, line).group()
+        output_list = (mline, 'experimental_path_match')
+    elif search(path_regex, line):
         mline = search(path_regex, line).group()
         output_list = (mline, 'path_match')
     elif search(single_path_regex, line):
@@ -145,9 +148,9 @@ def link_extract(line: str, domain = "") -> tuple:
     elif search(single_path_regex, line):
         mline = search(single_path_regex, line).group()
         output_list = (mline, 'single_path_match')
-    #elif search(experimental_path_regex, line):
-    #    mline = search(experimental_path_regex, 'experimental_path_match')
-    #    output_list = (mline, 'experimental_path_match')
+    elif search(experimental_path_regex, line):
+        mline = search(experimental_path_regex, 'experimental_path_match')
+        output_list = (mline, 'experimental_path_match')
     elif domain and search(subdomain_regex(domain), line):
         mline = search(subdomain_regex(domain).group(), line)
         if not mline == domain:
