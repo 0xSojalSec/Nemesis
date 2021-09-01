@@ -1,5 +1,4 @@
 import unittest
-#["No input type='hidden case' test", "No input type='hidden case' test and name value change function"
 from Nemesis import Nemesis
 from Nemesis.lib.Functions import reduce_string, dom_source_extract, dom_sink_extract
 from Nemesis.lib.Functions import subdomain_extract, url_extract, path_extract, shannon_extract
@@ -56,11 +55,13 @@ class NemesisTest(unittest.TestCase):
     def test_path_extract(self):
         self.assertEqual(path_extract(''), (), "Should be empty")
         self.assertEqual(path_extract('random_path/'), (), "Should be empty")
-        #self.assertEqual(path_extract('/a?d=e&f=g'), ("/a?d=e&f=g", "path_match"), "Should be equal")
-        #self.assertEqual(path_extract('/random_path/'), ("/random_path/", "path_match"), "Should be equal")
-        #self.assertEqual(path_extract('a/b/c'), ("a/b/c", "path_match"), "Should be equal")
-        self.assertEqual(path_extract('/a/b/c'), ("/a/b/c", "path_match"), "Should be equal")
-        self.assertEqual(path_extract('/a/b/c?d=e&f=g'), ("/a/b/c?d=e&f=g", "path_match"), "Should be equal")
+        self.assertEqual(path_extract('random_path/random_path'), (), "Should be empty")
+        self.assertEqual(path_extract('/random_path'), (), "Should be empty")
+        self.assertEqual(path_extract('/a?d=e&f=g'), ("/a?d=e&f=g", "experimental_path_match"), "Should be equal")
+        self.assertEqual(path_extract('/random_path/'), ("/random_path/", "experimental_path_match"), "Should be equal")
+        self.assertEqual(path_extract('a/b/c'), ("a/b/c", "experimental_path_match"), "Should be equal")
+        self.assertEqual(path_extract('/a/b/c'), ("/a/b/c", "experimental_path_match"), "Should be equal")
+        self.assertEqual(path_extract('/a/b/c?d=e&f=g'), ("/a/b/c?d=e&f=g", "experimental_path_match"), "Should be equal")
 
     def test_shannon_extract(self):
         self.assertEqual(shannon_extract(''), (), "Should be empty")
