@@ -1,6 +1,7 @@
 # Version 1.2
 * Improve url regex and add url regex without netloc
-* Modify commented unittest and uncomment
+* Modify unittests to include more and better paths and reduce false positives
+* Add temporary experimental_path_regex to be merged with path_regex later; warning added
 
 # Version 1.1
 * Add unittests for standardization of tool

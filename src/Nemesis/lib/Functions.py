@@ -7,6 +7,9 @@ from Nemesis.lib.Globals import base64char, hexchar, dom_sources_regex, dom_sink
 from Nemesis.lib.Globals import url_regex, url_regex_without_netloc, subdomain_regex, path_regex, single_path_regex
 from Nemesis.lib.Globals import web_services_regex, custom_regex_sensitive, custom_regex_insensitive, experimental_path_regex
 
+from warnings import warn
+warn("Experimental path regex is experimental and might generate false positives")
+
 def banner():
     b = '\x1b[1m\x1b[31m    _   __                         _     \n   / | / /__  ____ ___  ___  _____(_)____\n  /  |/ / _ \\/ __ `__ \\/ _ \\/ ___/ / ___/\n / /|  /  __/ / / / / /  __(__  ) (__  ) \n/_/ |_/\\___/_/ /_/ /_/\\___/____/_/____/  \n                                         \n\x1b[0m'
     print(b)
