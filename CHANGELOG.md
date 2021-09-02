@@ -1,4 +1,7 @@
 # Version 1.3
+* Disable pretty_print match type for the moment
+* Domain argument now enabled and shannon entropy check
+* Refactor Extract.py to Scan.py and bug fixes for NemesisScan
 * Fix url_extract to not fail unittest
 * Change code style, code formatting for improved looks
 
