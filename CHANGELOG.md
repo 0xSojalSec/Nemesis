@@ -1,3 +1,7 @@
+# Version 1.3
+* Fix url_extract to not fail unittest
+* Change code style, code formatting for improved looks
+
 # Version 1.2
 * Improve url regex and add url regex without netloc
 * Modify unittests to include more and better paths and reduce false positives

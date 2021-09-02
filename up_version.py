@@ -1,3 +1,4 @@
+import sys
 from argparse import ArgumentParser
 
 parser = ArgumentParser()
@@ -6,8 +7,8 @@ argv = parser.parse_args()
 
 setup = [line for line in open('setup.py')]
 
-def upgrade_version(line):
-    text, version = line.split('=')
+def upgrade_version(setup_lines):
+    text, version = setup_lines.split('=')
     beginning, main, end = version.split('"')
     first, second, third = [int(_) for _ in main.split('.')]
     if third < 99:
@@ -21,8 +22,8 @@ def upgrade_version(line):
             first = first + 1
     main = ".".join((str(first), str(second), str(third)))
     version = '"'.join((beginning, main, end))
-    line = '='.join((text, version))
-    return line
+    setup_lines = '='.join((text, version))
+    return setup_lines
 
 def keyboard_interrupt(setup_file):
     print("Version upgrade failed. Exiting")
@@ -45,7 +46,7 @@ for line in setup:
             exit_program = True
         if exit_program:
             print("Stopping setup.py upgrade")
-            exit(10)
+            sys.exit(10)
     new_setup.append(line)
 with open("setup.py", "w+") as f:
     for line in new_setup:

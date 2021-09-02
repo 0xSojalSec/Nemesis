@@ -93,7 +93,7 @@ def url_extract(line: str) -> tuple:
     #    output_list = (mline, 'url_match_without_netloc')
     if extractor.has_urls(line):
         mline = extractor.find_urls(line)[0]
-        output_list = (mline, 'url_match') if '://' in mline or 'www' in mline else ()
+        output_list = (mline, 'url_match') if '://' in mline or 'www' in mline or '/' in mline or '?' else ()
     return output_list
 
 def path_extract(line: str) -> tuple:
