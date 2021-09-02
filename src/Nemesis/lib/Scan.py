@@ -67,7 +67,7 @@ class NemesisScan:
         print(f"{Color.information} Javascript Extraction:")
         for match, js_line in results:
             output_list.append(match)
-            pretty_print(js_line, match)
+            pretty_print(js_line, *match)
         return output_list
 
     def extract_from_html(self, html_dict):
@@ -101,5 +101,5 @@ class NemesisScan:
         output_list = []
         for match, link in results:
             output_list.append(match)
-            pretty_print(link, match)
+            pretty_print(link, *match)
         return output_list

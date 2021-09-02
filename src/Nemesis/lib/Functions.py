@@ -1,16 +1,11 @@
 from math import log
 from termcolor import colored
 from re import search, IGNORECASE
-from urlextract import URLExtract
 
 from Nemesis.lib.Globals import Color
-from Nemesis.lib.Globals import base64char, hexchar, dom_sources_regex, dom_sinks_regex
+from Nemesis.lib.Globals import base64char, hexchar, dom_sources_regex, dom_sinks_regex, extractor
 from Nemesis.lib.Globals import subdomain_regex, path_regex, single_path_regex, experimental_path_regex
 from Nemesis.lib.Globals import web_services_regex, custom_regex_sensitive, custom_regex_insensitive
-
-from warnings import warn
-warn("Experimental path regex is experimental and might generate false positives")
-extractor = URLExtract()
 
 def banner():
     b = '\x1b[1m\x1b[31m    _   __                         _     \n   / | / /__  ____ ___  ___  _____(_)____\n  /  |/ / _ \\/ __ `__ \\/ _ \\/ ___/ / ___/\n / /|  /  __/ / / / / /  __(__  ) (__  ) \n/_/ |_/\\___/_/ /_/ /_/\\___/____/_/____/  \n                                         \n\x1b[0m'
@@ -18,6 +13,10 @@ def banner():
 
 def starter(argv):
     from sys import stdin
+    from warnings import warn
+    print("DEBUG INFORMATION")
+    warn("Experimental path regex is experimental and might generate false positives")
+    print("Pretty print match is disabled")
     if argv.banner:
         banner()
         exit()
@@ -166,10 +165,15 @@ def link_extract(line: str, domain = "") -> tuple:
             output_list = (mline, 'subdomain_match')
     return output_list
 
-def pretty_print(line: str, match_type_tuple: tuple):
-    if not match_type_tuple: return
-    match, match_type = match_type_tuple
-    match_type = match_type.split('_match')[0].replace('_', ' ')
+def pretty_print(line: str, match: str, match_type: str = ""):
+    if not match:
+        return None
+    match_type = ""
+    if match_type:
+        match_type = match_type.split('_match')[0].replace('_', ' ')
     split_beginning, split_end = line.split(match)[0], line.split(match)[-1]
     colored_line = split_beginning + colored(match, color='red', attrs=['bold']) + split_end
-    print(f"{Color.good} Found: {colored_line} (Match: {match_type})")
+    if match_type:
+        print(f"{Color.good} Found: {colored_line} (Match: {match_type})")
+    else:
+        print(f"{Color.good} Found: {colored_line}")
