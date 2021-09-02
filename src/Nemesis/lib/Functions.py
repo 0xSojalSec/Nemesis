@@ -161,7 +161,7 @@ def link_extract(line: str, domain = "") -> tuple:
         mline = search(experimental_path_regex, 'experimental_path_match')
         output_list = (mline, 'experimental_path_match')
     elif domain and search(subdomain_regex(domain), line):
-        mline = search(subdomain_regex(domain).group(), line)
+        mline = search(subdomain_regex(domain), line).group()
         if not mline == domain:
             output_list = (mline, 'subdomain_match')
     return output_list
