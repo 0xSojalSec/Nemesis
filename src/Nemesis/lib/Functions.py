@@ -93,7 +93,7 @@ def url_extract(line: str) -> tuple:
     #    output_list = (mline, 'url_match_without_netloc')
     if extractor.has_urls(line):
         mline = extractor.find_urls(line)[0]
-        output_list = (mline, 'url_match')
+        output_list = (mline, 'url_match') if '://' in mline or 'www' in mline else ()
     return output_list
 
 def path_extract(line: str) -> tuple:
@@ -144,13 +144,13 @@ def link_extract(line: str, domain = "") -> tuple:
     # url_regex over subdomain_regex, might supress
     if extractor.has_urls(line):
         mline = extractor.find_urls(line)[0]
-        output_list = (mline, 'url_match')
-    if search(url_regex, line):
-        mline = search(url_regex, line).group()
-        output_list = (mline, 'url_match')
-    elif search(url_regex_without_netloc, line):
-        mline = search(url_regex_without_netloc, line).group()
-        output_list = (mline, 'url_match_without_netloc')
+        output_list = (mline, 'url_match') if '://' in mline or 'www' in mline else ()
+    #if search(url_regex, line):
+    #    mline = search(url_regex, line).group()
+    #    output_list = (mline, 'url_match')
+    #elif search(url_regex_without_netloc, line):
+    #    mline = search(url_regex_without_netloc, line).group()
+    #    output_list = (mline, 'url_match_without_netloc')
     elif search(path_regex, line):
         mline = search(path_regex, line).group()
         output_list = (mline, 'path_match')

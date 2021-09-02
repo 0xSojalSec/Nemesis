@@ -14,6 +14,7 @@ from Nemesis.lib.Functions import pretty_print
 
 engine = Engine()
 def extract_url(url):
+    print(f"{Color.other} Scanning {url} ...")
     unparsed_url = urler(url)
     parsed_url = urlparse(unparsed_url)
     domain, path = parsed_url.netloc, parsed_url.path
@@ -23,46 +24,37 @@ def extract_url(url):
         js_code = engine.js_source_return(unparsed_url)
     else:
         s = BeautifulSoup(engine.html_source_return(unparsed_url), 'html.parser')
-        js_scripts = engine.find_script_code(s)
+        js_code = "\n".join(engine.find_script_code(s))
 
-    for js_code in js_scripts:
-        for js_line in js_code:
-            line = js_line.strip(' ').rstrip('{').rstrip(' ').lstrip('}').lstrip(' ')
-            l = dom_source_extract(line)
-            if l:
-                output_list.append(l)
-                pretty_print(line, l)
-                continue
-            l = dom_sink_extract(line)
-            if l:
-                output_list.append(l)
-                pretty_print(line, l)
-                continue
-            l = link_extract(line, domain = domain)
-            if l:
-                output_list.append(l)
-                pretty_print(line, l)
-                continue
-            #l = path_extract(line)
-            #if l:
-            #    output_list.append(l)
-            #    continue
-            #l = subdomain_extract(line)
-            #if l:
-            #    output_list.append(l)
-            #    continue
-            l = custom_extract(line)
-            if l:
-                output_list.append(l)
-                pretty_print(line, l)
-                continue
-            l = shannon_extract(line)
-            if l:
-                output_list.append(l)
-                pretty_print(line, l)
-                continue
+    for js_line in js_code.split('\n'):
+        line = js_line.strip(' ')
+        l = dom_source_extract(line)
+        if l:
+            output_list.append(l)
+            pretty_print(line, l)
+            continue
+        l = dom_sink_extract(line)
+        if l:
+            output_list.append(l)
+            pretty_print(line, l)
+            continue
+        l = link_extract(line, domain = domain)
+        if l:
+            output_list.append(l)
+            pretty_print(line, l)
+            continue
+        #l = path_extract(line) ... subdomain_extract(line) ...
+        l = custom_extract(line)
+        if l:
+            output_list.append(l)
+            pretty_print(line, l)
+            continue
+        l = shannon_extract(line)
+        if l:
+            output_list.append(l)
+            pretty_print(line, l)
+            continue
     if not path or not is_js_url:
-        print(url)
         html_dict = {
             'url': unparsed_url,
             'links': engine.find_href(s),

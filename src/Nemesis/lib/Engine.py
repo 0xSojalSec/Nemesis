@@ -35,7 +35,7 @@ class Engine:
         return l
 
     def find_script_code(self, s):
-        e = [beautify(st.string).split('\n') for st in s.find_all('script', {'src': False })]
+        e = [beautify(st.string) for st in s.find_all('script', {'src': False })]
         return e
 
     def html_source_return(self, u):
@@ -49,7 +49,7 @@ class Engine:
     def js_source_return(self, u):
         data = []
         try:
-            data = beautify(get(u, timeout = 15).text).split('\n')
+            data = beautify(get(u, timeout = 15).text)
         except Timeout:
             pass
         return data
