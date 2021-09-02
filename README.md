@@ -1,7 +1,7 @@
 # Nemesis
 ![Nemesis](pics/Nemesis.png)
-[![Code Grade](https://www.code-inspector.com/project/15087/status/svg)](https://frontend.code-inspector.com/public/project/15087/JScanner/dashboard)
-[![Code Quality](https://www.code-inspector.com/project/15087/score/svg)](https://frontend.code-inspector.com/public/project/15087/JScanner/dashboard)
+[![Code Grade](https://www.code-inspector.com/project/15087/status/svg)](https://frontend.code-inspector.com/public/project/15087/Nemesis/dashboard)
+[![Code Quality](https://www.code-inspector.com/project/15087/score/svg)](https://frontend.code-inspector.com/public/project/15087/Nemesis/dashboard)
 
 ## Description
 A simple tool for scanning urls for vulnerabilites and sensitive information. It has lot of pre defined regexes for dom xss possibility detection, secrets leakage, hidden parameters, extra links and much more. 
