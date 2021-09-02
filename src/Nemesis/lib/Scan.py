@@ -93,11 +93,11 @@ class NemesisScan:
         if html_dict['comments']:
             print(f"{Color.information} Comments:")
             for comment in html_dict['comments']:
-                results.append((comment,"Comment"), comment)
+                results.append(((comment,"Comment"), comment))
         if html_dict['hidden_parameters']:
             print(f"{Color.information} Hidden parameters:")
             h = "&".join([hp.replace(":", "=") for hp in html_dict['hidden_parameters']])
-            results.append((h,"Hidden parameter"), h)
+            results.append(((h,"Hidden parameter"), h))
         output_list = []
         for match, link in results:
             output_list.append(match)
