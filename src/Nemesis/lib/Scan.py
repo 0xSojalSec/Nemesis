@@ -25,16 +25,16 @@ class NemesisScan:
             js_code = self.engine.js_source_return(unparsed_url)
             output_list.extend(self.extract_from_javascript(js_code))
 
-        s = BeautifulSoup(engine.html_source_return(unparsed_url), 'html.parser')
-        js_code = "\n".join(engine.find_script_code(s))
+        s = BeautifulSoup(self.engine.html_source_return(unparsed_url), 'html.parser')
+        js_code = "\n".join(self.engine.find_script_code(s))
         output_list.extend(self.extract_from_javascript(js_code))
         html_dict = {
             'url': unparsed_url,
-            'links': engine.find_href(s),
-            'img_links': engine.find_img_src(s),
-            'script_links': engine.find_script_src(s),
-            'comments': engine.find_comment(s),
-            'hidden_parameters': engine.find_hidden_input(s),
+            'links': self.engine.find_href(s),
+            'img_links': self.engine.find_img_src(s),
+            'script_links': self.engine.find_script_src(s),
+            'comments': self.engine.find_comment(s),
+            'hidden_parameters': self.engine.find_hidden_input(s),
         }
         output_list.extend(self.extract_from_html(html_dict))
         return output_list
@@ -45,11 +45,11 @@ class NemesisScan:
             js_line = line.strip(' ')
             match = dom_source_extract(js_line)
             if match:
-                result.append((match, js_line))
+                results.append((match, js_line))
                 continue
             match = dom_sink_extract(js_line)
             if match:
-                result.append((match, js_line))
+                results.append((match, js_line))
                 continue
             match = link_extract(js_line, domain = self.options['domain'])
             if match:
