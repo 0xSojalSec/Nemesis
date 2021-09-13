@@ -10,7 +10,12 @@ if [[ "$egg" == "" ]]; then
 	exit
 fi
 pip_egg="src/""$egg"".egg-info"
-rm $pip_egg build/ dist/ -r 1>/dev/null 2>/dev/null
+
+cat .gitignore | while read tempfile
+do
+	rm $tempfile -r 1>/dev/null 2>/dev/null
+done
+
 { python3 up_version.py || exit; } && vim -O CHANGELOG.md <(git log)
 python3 setup.py sdist
 twine upload dist/* && rm $pip_egg build/ dist/ -r 1>/dev/null 2>/dev/null
