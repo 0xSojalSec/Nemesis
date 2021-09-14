@@ -44,3 +44,6 @@ Enjoy bug hunting
 * Output to file saving is in work
 * Additional logical errors and false positivies from faulty regex
 
+## Support
+If you wanted to support me freely for the tools I create, chekout [this out](https://github.com/machinexa2/machinexa2/blob/master/SUPPORT.md).
+
