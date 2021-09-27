@@ -26,12 +26,12 @@ def main():
         'enable_entropy': argv.enable_entropy,
     }
     scanner = NemesisScan(scanner_options)
+    with ThreadPoolExecutor(max_workers=argv.threads or 8) as executor:
+        future_objects = [executor.submit(scanner.scan_url, url) for url in input_wordlist]
+    outputs = [future_object.result() for future_object in future_objects]
 
-    for url in input_wordlist:
-        scanner.scan_url(url)
-"""     with ThreadPoolExecutor(max_workers=argv.threads) as submitter:
-            future_objects = [submitter.submit(extract_url, input_word) for input_word in input_wordlist]
-"""
+#    for url in input_wordlist:
+#        scanner.scan_url(url)
 
 if __name__ == "__main__":
     main()

@@ -91,3 +91,6 @@ class NemesisTest(unittest.TestCase):
         self.assertEqual(link_extract('test.bit.ly', domain =  'bit.ly'), (), "Should be empty")
         self.assertEqual(link_extract('test.bit.lee', domain = 'bit.ly'), ('test.bit.lee', 'subdomain_match'), "Should be equal")
         self.assertEqual(link_extract('a.b.c', domain = 'b.c'), ('a.b.c', 'subdomain_match'), "Should be equal")
+        self.assertEqual(link_extract('/a', domain = '', already = True), ('/a', 'link_match'))
+        self.assertEqual(link_extract('/a/b/c', domain = '', already = True), ('/a/b/c', 'link_match'))
+        self.assertEqual(link_extract('/a?b=c', domain = '', already = True), ('/a?b=c', 'link_match'))

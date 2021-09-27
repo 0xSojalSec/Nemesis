@@ -130,11 +130,13 @@ def custom_extract(line: str) -> tuple:
             output_list = (mline, 'custom_regex')
     return output_list
 
-def link_extract(line: str, domain = "") -> tuple:
+def link_extract(line: str, domain = "", already = False) -> tuple:
     # rename output_list to output_tuple
     output_list = ()
     if not line or line.startswith('#'):
         return output_list
+    if already:
+        return (line, 'link_match')
     for web_service in web_services_regex:
         if search(web_service, line):
             mline = search(web_service, line).group()

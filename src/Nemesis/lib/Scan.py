@@ -75,7 +75,7 @@ class NemesisScan:
         if html_dict['links']:
             print(f"{Color.information} General links:")
             for link in html_dict['links']:
-                match = link_extract(link)
+                match = link_extract(link, domain = "", already = True)
                 if match:
                     results.append((match, link))
         if html_dict['img_links']:
